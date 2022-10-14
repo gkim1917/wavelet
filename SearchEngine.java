@@ -1,30 +1,34 @@
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 class Handler implements URLHandler {
     // The one bit of state on the server: a number that will be manipulated by
     // various requests.
-    int num = 0;
+    List<String> strlist = new ArrayList<>();
 
     public String handleRequest(URI url) {
-        if (url.getPath().equals("/")) {
-            return String.format("Number: %d", num);
-        } else if (url.getPath().equals("/increment")) {
-            num += 1;
-            return String.format("Number incremented!");
-        } else {
-            System.out.println("Path: " + url.getPath());
             if (url.getPath().contains("/add")) {
                 String[] parameters = url.getQuery().split("=");
-                if (parameters[0].equals("count")) {
-                    num += Integer.parseInt(parameters[1]);
-                    return String.format("Number increased by %s! It's now %d", parameters[1], num);
+                strlist.add(parameters[1]);
+                return String.format(parameters[1]+" string added to the list");
+            }
+            else if (url.getPath().contains("/search")) {
+                String[] parameters = url.getQuery().split("=");
+                String result= null;
+                String substr = parameters[1];
+                for(int i=0;i<strlist.size();i++){
+                    if(strlist.get(i).contains(substr)){
+                        if(result!=null){
+                            result.add(" and ");
+                        }
+                        result.add(strlist.get(i));
+                    }
                 }
-                return String.format(parameters[1]);
+                return result;
             }
             return "404 Not Found!";
         }
-    }
 }
 
 class SearchEngine {

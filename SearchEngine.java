@@ -17,11 +17,11 @@ class Handler implements URLHandler {
             }
             else if (url.getPath().contains("/search")) {
                 String[] parameters = url.getQuery().split("=");
-                String result= null;
+                String result= "";
                 String substr = parameters[1];
                 for(int i=0;i<strlist.size();i++){
                     if(strlist.get(i).contains(substr)){
-                        if(result!=null){
+                        if(result.length()!=0){
                             result+=" and ";
                         }
                         result+=strlist.get(i);

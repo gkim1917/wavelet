@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 class Handler implements URLHandler {
     // The one bit of state on the server: a number that will be manipulated by
@@ -20,9 +22,9 @@ class Handler implements URLHandler {
                 for(int i=0;i<strlist.size();i++){
                     if(strlist.get(i).contains(substr)){
                         if(result!=null){
-                            result.add(" and ");
+                            result+=" and ";
                         }
-                        result.add(strlist.get(i));
+                        result+=strlist.get(i);
                     }
                 }
                 return result;
